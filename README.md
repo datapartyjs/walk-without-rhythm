@@ -27,13 +27,13 @@ First pass is super simple and just looks for the file names & package.json sign
 
 <img width="689" height="277" alt="Screenshot From 2025-11-24 23-39-35" src="https://github.com/user-attachments/assets/e4a6b3ae-af36-42b7-8c5a-bd7abf27b323" />
 
-It also compiles a full listing of all direct dev & production nodejs dependencies by name and name+version. So you can then do additional checks on these packages.
+It also compiles a full listing of all direct dev & production nodejs dependencies by name and name+version. If any version of a package that was known to have published an infected build to NPM is referenced anywhere in your dependency graph an alert will also be shown.
+
+
+Files continue state are located in the `reports/` and `reports/state` directories. These files maybe useful for additional scanning solutions.
 
 <img width="681" height="453" alt="Screenshot From 2025-11-24 23-41-47" src="https://github.com/user-attachments/assets/45cf38bd-78f6-4fc1-9839-73eb9b678e52" />
 
-### `./check-all-dependencies`
-
-Sorry, this script is not complete yet. Check back soon for updates.
 
 
 
