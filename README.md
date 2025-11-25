@@ -16,7 +16,6 @@ Bash scripts which can detect signs of the sha1hulud-2025-11-24 NPM/Github suppl
 This is extremely expiremental so there's likely false postivies. If the attacker adapts this repo may produce false negatives. Besure to read the issues and report bugs.
 
 
-
 ### `./check-projects <path-to-projects>`
 
 ```bash
@@ -32,10 +31,13 @@ It also compiles a full listing of all direct dev & production nodejs dependenci
 
 <img width="681" height="453" alt="Screenshot From 2025-11-24 23-41-47" src="https://github.com/user-attachments/assets/45cf38bd-78f6-4fc1-9839-73eb9b678e52" />
 
+### `./check-all-dependencies`
+
+Sorry, this script is not complete yet. Check back soon for updates.
 
 
 
-## Why?
+## NodeJS Supply Chain Attack, What's Going On?
 
 https://helixguard.ai/blog/malicious-sha1hulud-2025-11-24
 
@@ -44,3 +46,11 @@ There is an onging supply chain attack currently affect NPM and GitHub. The deta
 At the time our team read the blog post we were able to quickly verify the security incident as well as rapidly locate evidence of the ongoing nature of this attack. Live updates will be posted to the below mastodon thread. 
 
 https://partyon.xyz/@nullagent/115607631833338864
+
+## Steps to take
+
+1. You probably shouldn't run any `npm install` or `npm update` commands until NPM and GitHub have official mitigations in place.
+2. Before doing anything else you probably should check for signs of comproise. This can be done manually or using this repo or other similar scanning tools. If you DO continue working from an infected machine you risk having your personal data stolen or destroyed by this worm.
+3. After verifying that your system has not already been compromised you can likely safely work as normal but you should avoid upgrading or installing any different package versions. Its not fully clear at the time of posting if NPM is taking down infected packages we're still finding infected packages for download on NPM at this time.
+4. Before installing a new version of a package, you can download a `.tgz` archive using the command `npm pack <package-name>`. This does not install the package. You can then uncompress the package and check it for signs of compromise.
+
