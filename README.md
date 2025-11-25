@@ -22,6 +22,12 @@ This is extremely expiremental so there's likely false postivies. If the attacke
  * Check the full listing of package names against the list of known infected NPM packages.
    * If any of the `package.json`  or `package-lock.json` reference any of these known infected packages at ANY version a warning and full listing will be printed.
    * See https://github.com/datapartyjs/walk-without-rhythm/blob/main/data/infected-pkgs-versions.txt
+ * Sets Exit Codes
+   * `0` - Clean, no issues found
+   * `1` - Warnings found (verification needed)
+   * `2` - Critical issues found (immediate action required)
+   * `3` - Error during scan
+   * Compatible with the exit codes used in [other scanners](https://github.com/TimothyMeadows/sha1hulud-scanner?tab=readme-ov-file#exit-codes)
 
 #### Example - Infected Project & Dependency
 
