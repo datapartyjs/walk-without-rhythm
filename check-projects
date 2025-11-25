@@ -32,7 +32,6 @@ if [ -s "reports/infected-folders-jq.txt" ] || [ -s "reports/infected-folders-gr
     echo "Suspicious files "
 
     cat reports/infected-folders-grep.txt reports/infected-folders-grep.txt reports/infected-files.txt
-
     echo "Press Enter to continue scanning..."
     read
 fi
@@ -44,7 +43,7 @@ echo "Scanning harder . . . "
 mkdir -p downloads/metadata
 mkdir -p downloads/pkgs
 
-rm -rf reports/state
+#rm -rf reports/state
 mkdir -p reports/state
 
 echo "Reading all dependencies . . ."
@@ -57,7 +56,16 @@ sort -u reports/state/every-pkg-depend.txt reports/state/every-pkg-lock-depend.t
 
 # Dedup all package names
 
-cat reports/unique-depend-versions.txt | awk '{print $1}' | sort -u > reports/unique-depends.txt
+#cat reports/unique-depend-versions.txt | awk '{print $1}' | sort -u > reports/unique-depends.txt
 
 
 
+comm -12 <(sort "data/infected-pkgs.txt") <(sort "reports/unique-depends.txt") > "reports/infected-depends.txt"
+
+
+if [ -s "reports/infected-depends.txt" ]; then
+    echo "⚠️ One of your dependencies could infected! ⚠⚠️"
+    echo "Suspicious dependencies "
+
+    cat reports/infected-depends.txt
+fi
