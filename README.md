@@ -2,14 +2,9 @@
 
 <i>"And you won't attract the worm"</i>
 
-Bash scripts which can detect signs of the sha1hulud-2025-11-24 NPM/Github supply chain attack.
+Open Source Bash scripts which can detect signs of the Sha1-Hulud 2025-11-24 NPM/Github supply chain attack.
 
-### Requirements
-
- * bash
- * sed
- * grep
- * jq
+ * Support - [ko-fi/dataparty](https://ko-fi.com/dataparty)
 
 ## How to use
 
@@ -22,20 +17,32 @@ This is extremely expiremental so there's likely false postivies. If the attacke
 ./check-projects <path-to-projects>
 ```
 
-First pass is super simple and just looks for the file names & package.json signature for signs of infection. If the first pass finds something sketchy it stops and repors where:
+ * Check `package.json` recursively for references to `setup_bun.js`
+ * Crawl all `package.json` && `package-lock.json` for a complete listing of package names and versions
+ * Check the full listing of package names against the list of known infected NPM packages.
+   * If any of the `package.json`  or `package-lock.json` reference any of these known infected packages at ANY version a warning and full listing will be printed.
+   * See https://github.com/datapartyjs/walk-without-rhythm/blob/main/data/infected-pkgs-versions.txt
 
+#### Example - Infected Project & Dependency
 
 <img width="689" height="277" alt="Screenshot From 2025-11-24 23-39-35" src="https://github.com/user-attachments/assets/e4a6b3ae-af36-42b7-8c5a-bd7abf27b323" />
 
-It also compiles a full listing of all direct dev & production nodejs dependencies by name and name+version. If any version of a package that was known to have published an infected build to NPM is referenced anywhere in your dependency graph an alert will also be shown.
+##### Example - Reports and State
 
+Reports and state are saved to `reports/` and `reports/state` directories. These files maybe useful for additional scanning solutions. 
 
-Files continue state are located in the `reports/` and `reports/state` directories. These files maybe useful for additional scanning solutions.
+The tool clears state between runs. Report files are not deleted and in most cases are merged between runs so multiple runs provide the combined results.
 
 <img width="681" height="453" alt="Screenshot From 2025-11-24 23-41-47" src="https://github.com/user-attachments/assets/45cf38bd-78f6-4fc1-9839-73eb9b678e52" />
 
 
+### Requirements
 
+ * bash
+ * sed
+ * grep
+ * jq
+ * curl
 
 ## NodeJS Supply Chain Attack, What's Going On?
 
@@ -53,4 +60,16 @@ https://partyon.xyz/@nullagent/115607631833338864
 2. Before doing anything else you probably should check for signs of comproise. This can be done manually or using this repo or other similar scanning tools. If you DO continue working from an infected machine you risk having your personal data stolen or destroyed by this worm.
 3. After verifying that your system has not already been compromised you can likely safely work as normal but you should avoid upgrading or installing any different package versions. Its not fully clear at the time of posting if NPM is taking down infected packages we're still finding infected packages for download on NPM at this time.
 4. Before installing a new version of a package, you can download a `.tgz` archive using the command `npm pack <package-name>`. This does not install the package. You can then uncompress the package and check it for signs of compromise.
+
+# Similar Tools
+
+* https://github.com/TimothyMeadows/sha1hulud-scanner
+
+# Further Reading
+
+* https://about.gitlab.com/blog/gitlab-discovers-widespread-npm-supply-chain-attack/
+
+* https://www.sysdig.com/blog/return-of-the-shai-hulud-worm-affects-over-25-000-github-repositories
+
+* https://www.koi.ai/incident/live-updates-sha1-hulud-the-second-coming-hundred-npm-packages-compromised#heading-4
 
