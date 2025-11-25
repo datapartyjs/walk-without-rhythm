@@ -55,37 +55,9 @@ find $TARGET -type f -name "package-lock.json" -exec ./bin/pkg-lock-version-jq-d
 # Dedup dependencies with versions
 sort -u reports/state/every-pkg-depend.txt reports/state/every-pkg-lock-depend.txt | awk 'NF==2'  > reports/unique-depend-versions.txt
 
+# Dedup all package names
+
 cat reports/unique-depend-versions.txt | awk '{print $1}' | sort -u > reports/unique-depends.txt
 
-echo "Downloading dependency metadata"
-
-#while read line; do curl -C - -o downloads/metadata/$line https://registry.npmjs.org/$line; done < reports/unique-depends.txt
-
-while read line; do
-  if [ ! -f "downloads/metadata/$line" ]; then
-
-    # Check if the line contains a slash (has a directory path)
-    if [[ "$line" == *"/"* ]]; then
-      # Extract the directory path and create it
-      dir=$(dirname "$line")
-      mkdir -p "downloads/metadata/$dir"
-    fi
-
-    curl -C - -o downloads/metadata/$line https://registry.npmjs.org/$line
-  else
-    echo "Skipping: $line (already exists)"
-  fi
-done < reports/unique-depends.txt
-
-echo "Done downloading package metadata"
-
-#cat reports/unique-depends.txt | xargs -I {} curl -C - -o downloads/metadata/ https://registry.npmjs.org/tmp {}
-
-# Dedup all package names
-# Download all package metadata by name
-# Make list of tarballs to download
-# Dedup tarballs
-# Download tarballs
-# Check tarballs
 
 
