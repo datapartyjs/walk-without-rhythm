@@ -48,7 +48,7 @@ echo "Scanning harder . . . "
 mkdir -p downloads/metadata
 mkdir -p downloads/pkgs
 
-#rm -rf reports/state
+rm -rf reports/state
 mkdir -p reports/state
 
 echo "Reading all dependencies . . ."
