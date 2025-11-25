@@ -1,8 +1,19 @@
 #!/bin/bash
 
-set -x
+#set -x
 
 TARGET=$1
+
+if [ -z "$TARGET" ]; then
+  echo "Usage: $0 <path-to-nodejs-project(s)>"
+  echo "Example: $0 ~/Projects/my-node-app"
+  exit 1
+fi
+
+if [ ! -d "$TARGET" ]; then
+    echo "folder $TARGET not found"
+    exit 1
+fi
 
 
 mkdir -p reports/
@@ -12,19 +23,63 @@ mkdir -p reports/
 
 bash ./bin/detector-pkg-json-checker.bash $TARGET >> reports/infected-folders-grep.txt
 bash ./bin/detector-pkg-json-jq-checker.bash $TARGET >> reports/infected-folders-jq.txt
+find $TARGET -type f -name "bun_environment.js" | while read filename; do [ $(stat -c%s "$filename" 2>/dev/null) -gt 1048576 ] && echo "$filename"; done >> reports/infected-files.txt
 
+#while read filename; do [ $(stat -f%z "$filename" 2>/dev/null || stat -c%s "$filename" 2>/dev/null) -gt 1048576 ] && echo "$filename"; done < file.txt
 
+if [ -s "reports/infected-folders-jq.txt" ] || [ -s "reports/infected-folders-grep.txt" ] || [ -s "reports/infected-files.txt" ]; then
+    echo "⚠️🚨Your systems may be infected! ⚠⚠️🚨"
+    echo "Suspicious files "
+
+    cat reports/infected-folders-grep.txt reports/infected-folders-grep.txt reports/infected-files.txt
+
+    echo "Press Enter to continue scanning..."
+    read
+fi
+
+echo "Scanning harder . . . "
+
+#{ [ -s reports/infected-folders-grep.txt ] || [ -s reports/infected-folders-jq.txt ]; } && echo "⚠️🚨Your systems is infected ⚠⚠️🚨" && read
 
 mkdir -p downloads/metadata
 mkdir -p downloads/pkgs
 
+rm -rf reports/state
+mkdir -p reports/state
+
+echo "Reading all dependencies . . ."
 # Dump all dependencies & versions from all package.jsons
-find $TARGET -type f -name "package.json" -exec ./bin/pkg-version-jq-dumper-filtered.bash "{}" \; >> reports/every-pkg-depend.txt
-find $TARGET -type f -name "package-lock.json" -exec ./bin/pkg-lock-version-jq-dumper-filtered.bash "{}" \; >> reports/every-pkg-lock-depend.txt
+find $TARGET -type f -name "package.json" -exec ./bin/pkg-version-jq-dumper-filtered.bash "{}" \; >> reports/state/every-pkg-depend.txt
+find $TARGET -type f -name "package-lock.json" -exec ./bin/pkg-lock-version-jq-dumper-filtered.bash "{}" \; >> reports/state/every-pkg-lock-depend.txt
 
 # Dedup dependencies with versions
-sort -u reports/every-pkg-depend.txt reports/every-pkg-lock-depend.txt | awk 'NF==2'  > reports/unique-depend.txt
+sort -u reports/state/every-pkg-depend.txt reports/state/every-pkg-lock-depend.txt | awk 'NF==2'  > reports/unique-depend-versions.txt
 
+cat reports/unique-depend-versions.txt | awk '{print $1}' | sort -u > reports/unique-depends.txt
+
+echo "Downloading dependency metadata"
+
+#while read line; do curl -C - -o downloads/metadata/$line https://registry.npmjs.org/$line; done < reports/unique-depends.txt
+
+while read line; do
+  if [ ! -f "downloads/metadata/$line" ]; then
+
+    # Check if the line contains a slash (has a directory path)
+    if [[ "$line" == *"/"* ]]; then
+      # Extract the directory path and create it
+      dir=$(dirname "$line")
+      mkdir -p "downloads/metadata/$dir"
+    fi
+
+    curl -C - -o downloads/metadata/$line https://registry.npmjs.org/$line
+  else
+    echo "Skipping: $line (already exists)"
+  fi
+done < reports/unique-depends.txt
+
+echo "Done downloading package metadata"
+
+#cat reports/unique-depends.txt | xargs -I {} curl -C - -o downloads/metadata/ https://registry.npmjs.org/tmp {}
 
 # Dedup all package names
 # Download all package metadata by name
