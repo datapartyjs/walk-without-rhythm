@@ -56,7 +56,7 @@ sort -u reports/state/every-pkg-depend.txt reports/state/every-pkg-lock-depend.t
 
 # Dedup all package names
 
-#cat reports/unique-depend-versions.txt | awk '{print $1}' | sort -u > reports/unique-depends.txt
+cat reports/unique-depend-versions.txt | awk '{print $1}' | sort -u > reports/unique-depends.txt
 
 
 
