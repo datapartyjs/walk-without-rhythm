@@ -75,6 +75,7 @@ https://partyon.xyz/@nullagent/115607631833338864
 * https://github.com/gensecaihq/Shai-Hulud-2.0-Detector
 * https://github.com/tprinty/sha1hulud-action-detector
 * https://github.com/da1z/amihulud
+* https://github.com/bobberg/sha1-hulud-folder-checker
 
 <i> Links to other projects provided with no warranty express or implied. </i>
 
