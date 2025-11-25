@@ -2,6 +2,12 @@
 
 Bash scripts which can detect signs of the sha1hulud-2025-11-24 NPM/Github supply chain attack.
 
+### Requirements
+
+ * bash
+ * sed
+ * grep
+ * jq
 
 ## How to use
 
