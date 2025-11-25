@@ -56,6 +56,7 @@ https://partyon.xyz/@nullagent/115607631833338864
 
 ## Steps to take
 
+0. Turn on Multi-Factor Authentication (MFA / 2FA) immediately on your NPM & GitHub accounts (and all other key infra). Change and review passwords for cloud services you use.
 1. You probably shouldn't run any `npm install` or `npm update` commands until NPM and GitHub have official mitigations in place.
 2. Before doing anything else you probably should check for signs of comproise. This can be done manually or using this repo or other similar scanning tools. If you DO continue working from an infected machine you risk having your personal data stolen or destroyed by this worm.
 3. After verifying that your system has not already been compromised you can likely safely work as normal but you should avoid upgrading or installing any different package versions. Its not fully clear at the time of posting if NPM is taking down infected packages we're still finding infected packages for download on NPM at this time.
