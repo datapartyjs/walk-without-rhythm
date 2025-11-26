@@ -76,6 +76,16 @@ https://partyon.xyz/@nullagent/115607631833338864
 * https://github.com/tprinty/sha1hulud-action-detector
 * https://github.com/da1z/amihulud
 * https://github.com/bobberg/sha1-hulud-folder-checker
+* https://github.com/servusdei2018/sha1-halud-scan
+* https://github.com/kevcooper/fremkit
+* https://github.com/ysskrishna/shai-hulud-detector
+* https://github.com/Cobenian/shai-hulud-detect
+
+## GitHub Scanners
+
+* https://github.com/ysskrishna/shai-hulud-detector
+* https://github.com/panther-labs/panther-analysis/pull/1826
+
 
 <i> Links to other projects provided with no warranty express or implied. </i>
 
