@@ -41,6 +41,35 @@ The tool clears state between runs. Report files are not deleted and in most cas
 
 <img width="681" height="453" alt="Screenshot From 2025-11-24 23-41-47" src="https://github.com/user-attachments/assets/45cf38bd-78f6-4fc1-9839-73eb9b678e52" />
 
+### `./is-npm-still-dangerous`
+
+ * Reads the `data/infected-pkgs.txt`
+ * Downloads the latest package metadata for every known infected package
+ * Downloads the current latest package.tgz
+ * Uncompresses and scans the latest version using `./check-projects`
+ * Depending upon the scan result 
+
+```bash
+./is-npm-still-dangerous
+
+capacitor-voice-recorder-wav 6.0.3 - STILL COMPROMISED
+haufe-axera-api-client 0.0.2 - STILL COMPROMISED
+hyper-fullfacing 1.0.3 - STILL COMPROMISED
+@ifelsedeveloper/protocol-contracts-svm-idl 0.1.2 - STILL COMPROMISED
+my-saeed-lib 0.1.1 - STILL COMPROMISED
+quickswap-ads-list 1.0.33 - STILL COMPROMISED
+@seung-ju/react-native-action-sheet 0.2.1 - STILL COMPROMISED
+tcsp 2.0.2 - STILL COMPROMISED
+web-types-lit 0.1.1 - STILL COMPROMISED
+web-types-lit 0.1.1 - STILL COMPROMISED
+Found 9 npm-reports/npm-latest-bad.txt packages STILL compromised!
+
+See npm-reports/npm-latest-bad.txt for full listing.
+```
+
+
+<i> Warning - Most people probably don't need to run this. It causes a lot of NPM traffic. </i>
+<i> Warning - There's a few packages this fails to download and check (likely bc's they are hosted outside of NPMjs.org) </i>
 
 ### Requirements
 
