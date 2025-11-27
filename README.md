@@ -22,6 +22,12 @@ This is extremely expiremental so there's likely false postivies. If the attacke
  * Check the full listing of package names against the list of known infected NPM packages.
    * If any of the `package.json`  or `package-lock.json` reference any of these known infected packages at ANY version a warning and full listing will be printed.
    * See https://github.com/datapartyjs/walk-without-rhythm/blob/main/data/infected-pkgs-versions.txt
+ * Sets Exit Codes
+   * `0` - Clean, no issues found
+   * `1` - Warnings found (verification needed)
+   * `2` - Critical issues found (immediate action required)
+   * `3` - Error during scan
+   * Compatible with the exit codes used in [other scanners](https://github.com/TimothyMeadows/sha1hulud-scanner?tab=readme-ov-file#exit-codes)
 
 #### Example - Infected Project & Dependency
 
@@ -54,17 +60,50 @@ At the time our team read the blog post we were able to quickly verify the secur
 
 https://partyon.xyz/@nullagent/115607631833338864
 
+## Is the worm still active?
+
+As of Noon Pacific time on November 26th, 2025, yes the worm is still active. Infected packages hosted by NPM continue to spread(ie #16 for an example). Meanwhile github continues to be a landing point the worm is publicaly stolen data to. From what we can see the worm IS active but has slowed down significantly.
+
 ## Steps to take
 
-0. Turn on Multi-Factor Authentication (MFA / 2FA) immediately on your NPM & GitHub accounts (and all other key infra). Change and review passwords for cloud services you use.
-1. You probably shouldn't run any `npm install` or `npm update` commands until NPM and GitHub have official mitigations in place.
-2. Before doing anything else you probably should check for signs of comproise. This can be done manually or using this repo or other similar scanning tools. If you DO continue working from an infected machine you risk having your personal data stolen or destroyed by this worm.
-3. After verifying that your system has not already been compromised you can likely safely work as normal but you should avoid upgrading or installing any different package versions. Its not fully clear at the time of posting if NPM is taking down infected packages we're still finding infected packages for download on NPM at this time.
-4. Before installing a new version of a package, you can download a `.tgz` archive using the command `npm pack <package-name>`. This does not install the package. You can then uncompress the package and check it for signs of compromise.
+- Turn on Multi-Factor Authentication (MFA / 2FA) immediately on your NPM & GitHub accounts (and all other key infra). Change and review passwords for cloud services you use.
+- You probably shouldn't run any `npm install` or `npm update` commands until NPM and GitHub have official mitigations in place.
+- Before doing anything else you probably should check for signs of comproise. This can be done manually or using this repo or other similar scanning tools. If you DO continue working from an infected machine you risk having your personal data stolen or destroyed by this worm.
+- After verifying that your system has not already been compromised you can likely safely work as normal but you should avoid upgrading or installing any different package versions. Its not fully clear at the time of posting if NPM is taking down infected packages we're still finding infected packages for download on NPM at this time.
+- Before installing a new version of a package, you can download a `.tgz` archive using the command `npm pack <package-name>`. This does not install the package. You can then uncompress the package and check it for signs of compromise.
+- Consider disabling install scripts
+  - `npm install --ignore-scripts` - Ignore install scripts
+  - `npm config set ignore-scripts true` - Ignore install scripts user wide
+  - [<i>"Package install scripts vulnerability"</i>](https://blog.npmjs.org/post/141702881055/package-install-scripts-vulnerability) - NPM blog post from 2016 explaining worm mitigations
+- Consider using a tool for fine grained script management
+  - [`@lavamoat/allow-scripts`](https://www.npmjs.com/package/@lavamoat/allow-scripts)
+  - [`can-i-ignore-scripts`](https://www.npmjs.com/package/can-i-ignore-scripts)
+- If you are a package maintainer consider using `npm shrinkwrap`
+  - [Documentation](https://docs.npmjs.com/cli/v11/commands/npm-shrinkwrap)
+  - [`package-lock.json` vs `npm-shrinkwrap.json`](https://docs.npmjs.com/cli/v11/configuring-npm/package-lock-json#package-lockjson-vs-npm-shrinkwrapjson)
 
-# Similar Tools
+
+# Similar Sha1-Hulud 11/24/25 Detection Tools
+
+<i> Links to other projects provided with no warranty express or implied. </i>
 
 * https://github.com/TimothyMeadows/sha1hulud-scanner
+* https://github.com/mottibec/sha1hulud-scanner
+* https://github.com/gensecaihq/Shai-Hulud-2.0-Detector
+* https://github.com/tprinty/sha1hulud-action-detector
+* https://github.com/da1z/amihulud
+* https://github.com/bobberg/sha1-hulud-folder-checker
+* https://github.com/servusdei2018/sha1-halud-scan
+* https://github.com/kevcooper/fremkit
+* https://github.com/ysskrishna/shai-hulud-detector
+* https://github.com/Cobenian/shai-hulud-detect
+
+## GitHub Scanners
+
+* https://github.com/ysskrishna/shai-hulud-detector
+* https://github.com/panther-labs/panther-analysis/pull/1826
+
+
 
 # Further Reading
 
