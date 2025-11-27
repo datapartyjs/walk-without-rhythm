@@ -6,6 +6,15 @@ Open Source Bash scripts which can detect signs of the Sha1-Hulud 2025-11-24 NPM
 
  * Support - [ko-fi/dataparty](https://ko-fi.com/dataparty)
 
+### Requirements
+
+ * bash
+ * sed
+ * grep
+ * jq
+ * curl
+
+
 ## How to use
 
 This is extremely expiremental so there's likely false postivies. If the attacker adapts this repo may produce false negatives. Besure to read the issues and report bugs.
@@ -61,7 +70,6 @@ quickswap-ads-list 1.0.33 - STILL COMPROMISED
 @seung-ju/react-native-action-sheet 0.2.1 - STILL COMPROMISED
 tcsp 2.0.2 - STILL COMPROMISED
 web-types-lit 0.1.1 - STILL COMPROMISED
-web-types-lit 0.1.1 - STILL COMPROMISED
 Found 9 npm-reports/npm-latest-bad.txt packages STILL compromised!
 
 See npm-reports/npm-latest-bad.txt for full listing.
@@ -71,13 +79,6 @@ See npm-reports/npm-latest-bad.txt for full listing.
 <i> Warning - Most people probably don't need to run this. It causes a lot of NPM traffic. </i>
 <i> Warning - There's a few packages this fails to download and check (likely bc's they are hosted outside of NPMjs.org) </i>
 
-### Requirements
-
- * bash
- * sed
- * grep
- * jq
- * curl
 
 ## NodeJS Supply Chain Attack, What's Going On?
 
